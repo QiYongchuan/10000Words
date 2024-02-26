@@ -41,7 +41,7 @@ public class TranslationService {
             JSONObject responseBody = new JSONObject(response.getBody());
 
             // 这里假设返回的JSON中有个"data"字段包含翻译的结果
-            String translatedText = responseBody.getString("text");
+            String translatedText = responseBody.getString("data");
 
             // 返回翻译后的文本
             return translatedText;
@@ -49,9 +49,6 @@ public class TranslationService {
             // 处理错误情况，这里只是简单返回一个错误信息
             return "Error: Unable to translate the word.";
         }
-        // 构建请求
-        // 发送请求并获取响应
-        // 解析响应并返回翻译
 
     }
 }
