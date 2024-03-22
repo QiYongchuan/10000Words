@@ -12,14 +12,14 @@ import org.springframework.web.client.RestTemplate;
 
 @Service
 public class TranslationService {
-    private final RestTemplate restTemplate;
+    private static  RestTemplate restTemplate;
 
     @Autowired
     public TranslationService(RestTemplateBuilder restTemplateBuilder) {
         this.restTemplate = restTemplateBuilder.build();
     }
 
-    public String translateWord(String word) {
+    public static String translateWord(String word) {
         String apiUrl = "https://api.deeplx.org/translate"; // 替换为实际的API URL
         // 设置请求头
         HttpHeaders headers = new HttpHeaders();

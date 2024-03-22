@@ -9,7 +9,7 @@ import java.util.Optional;
 
 @Repository
 public interface WordRepository extends JpaRepository <Word, Long> {
-    List<Word> findByUser_Id(Long userId);
+//    List<Word> findByUser_Id(Long userId);
 
     List<Word> findByWordContaining(String word);
 

@@ -23,7 +23,11 @@ import java.util.Optional;
 // 2.最主要的是，这里来实现各种的复杂业务逻辑：如在添加单词之前进行翻译，
 @Service
 public class WordService {
-    private final WordRepository wordRepository;
+
+    private static WordRepository wordRepository ;
+
+
+    @Autowired
     private TranslationService translationService;
 
     public WordService(WordRepository wordRepository, TranslationService translationService) {
@@ -40,7 +44,7 @@ public class WordService {
         return wordRepository.save(word);
     }
 
-    public List<Word> getAllWords() {
+    public static List<Word> getAllWords() {
         return wordRepository.findAll();
     }
 
@@ -54,7 +58,7 @@ public class WordService {
 
     // 上面是基础的增删改查，下面开始实现一些复杂业务逻辑
 
-    public Word addWord(Word word) {
+    public static Word addWord(Word word) {
         // 首先检查单词是否已存在
         Optional<Word> existingWord = wordRepository.findByWord(word.getWord());
         if (existingWord.isPresent()) {
@@ -62,7 +66,7 @@ public class WordService {
             return existingWord.get();
         } else {
             // 否则，调用翻译服务进行翻译
-            String translation = translationService.translateWord(word.getWord());
+            String translation = TranslationService.translateWord(word.getWord());
             word.setTranslation(translation);
             // 保存新单词及其翻译到数据库
             return wordRepository.save(word);
@@ -82,8 +86,8 @@ public class WordService {
         return wordRepository.findByWordContaining(word);
     }
 
-    public List<Word> getWordsForUser(Long userId) {
-        // 可能涉及复杂的业务逻辑，如用户的单词学习进度，权限验证等
-        return wordRepository.findByUser_Id(userId);
-    }
+//    public List<Word> getWordsForUser(Long userId) {
+//        // 可能涉及复杂的业务逻辑，如用户的单词学习进度，权限验证等
+//        return wordRepository.findByUser_Id(userId);
+//    }
 }
