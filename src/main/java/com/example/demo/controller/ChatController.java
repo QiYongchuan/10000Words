@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,7 +14,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+@CrossOrigin
 @RestController
 public class ChatController {
 
@@ -51,6 +52,41 @@ public class ChatController {
                                                      
                                                      
                                                      here is the word:%s
+                                                     
+                    The second task is :
+                    
+                      Please structure the output as a JSON object like the example below, but based on the  result text you're get.\\s
+                                                                                                                                                                  Remember, do not include the 'input' part in your response, only provide the structured 'output'.
+                                                                                                                                                                  Based on the Input Text provided, create a JSON object in a similar structure.
+                                                                                                                                                                  Just return a JSON object
+                                                                                                                                                                
+                                                                                                                                                                  Example Input:
+                                                                                                                                                                  "Alright, let's learn about a very special word today - 'love'. When we say 'love', we're talking about a feeling that's really, really special and important. It's like when you have a warm, happy feeling in your heart for someone or something.
+                                                                                                                                                                  For example, you might say, 'I love my family.' That means you have a wonderful feeling for your family, and you care about them a lot. Or, you could say, 'I love ice cream.' That means you really enjoy eating ice cream and it makes you happy.
+                                                                                                                                                                  Here are five new sample sentences to help you understand 'love':
+                                                                                                                                                                  1. 'I love playing with my toys.'
+                                                                                                                                                                  2. 'She loves to read books.'
+                                                                                                                                                                  3. 'We love our new puppy.'
+                                                                                                                                                                  4. 'They love to go on walks together.'
+                                                                                                                                                                  5. 'I love you, Mommy.'
+                                                                                                                                                                  Now, let's summarize what we've learned about 'love': 'Love' is a special feeling that makes you happy and warm inside, and it's for people, animals, or things that are really important to you.
+                                                                                                                                                                  Remember, 'love' is a word that's all about those special feelings in your heart."
+                                                                                                                                                                 \s
+                                                                                                                                                                  Example Output:
+                                                                                                                                                                  {
+                                                                                                                                                                    "concept": "love",
+                                                                                                                                                                    "definition": "A special feeling that makes you happy and warm inside, and it's for people, animals, or things that are really important to you.",
+                                                                                                                                                                    "examples": [
+                                                                                                                                                                      "I love playing with my toys.",
+                                                                                                                                                                      "She loves to read books.",
+                                                                                                                                                                      "We love our new puppy.",
+                                                                                                                                                                      "They love to go on walks together.",
+                                                                                                                                                                      "I love you, Mommy."
+                                                                                                                                                                    ],
+                                                                                                                                                                    "summary": "Love is a word that's all about those special feelings in your heart."
+                                                                                                                                                                  }
+                                          
+                                   
                 """.formatted(word);
 
         String inputText =  systemPrompt ;

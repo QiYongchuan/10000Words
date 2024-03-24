@@ -40,7 +40,7 @@ public class WordController {
     // 添加一个新单词
 
     @PostMapping
-    public Word createWord(@RequestBody Word word) throws JsonProcessingException {
+    public Word createWord(@RequestBody Word word)  {
 
         return   WordService.addWord(word);
     }
