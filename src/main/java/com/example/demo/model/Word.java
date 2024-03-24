@@ -1,14 +1,9 @@
 package com.example.demo.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 
-//import javax.persistence.Entity;
-//import javax.persistence.GeneratedValue;
-//import javax.persistence.GenerationType;
-//import javax.persistence.Id;
+import jakarta.persistence.*;
+
+
 
 /**
  * 实体类：Word
@@ -30,6 +25,31 @@ public class Word {
      * 翻译字段
      */
     private String translation;
+
+
+
+
+    private String translationByLLM;    // 用于数据库存储JSON字符串  与translationMap进行互转
+
+
+
+    private String imageUrl;  // 假设这是存储图片的属性
+
+    public String getTranslationByLLM() {
+        return translationByLLM;
+    }
+
+    public void setTranslationByLLM  (String translationByLLM) {
+        this.translationByLLM = translationByLLM;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 
     // Standard getters and setters
 

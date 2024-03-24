@@ -2,10 +2,12 @@ package com.example.demo.service;
 
 import com.example.demo.model.Word;
 import com.example.demo.repository.WordRepository;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -52,13 +54,13 @@ public class WordService {
         return wordRepository.findById(id).orElse(null);
     }
 
-    public void deleteWord(Long id) {
+    public static void deleteWord(Long id) {
         wordRepository.deleteById(id);
     }
 
     // 上面是基础的增删改查，下面开始实现一些复杂业务逻辑
 
-    public static Word addWord(Word word) {
+    public static Word addWord(Word word)  {
         // 首先检查单词是否已存在
         Optional<Word> existingWord = wordRepository.findByWord(word.getWord());
         if (existingWord.isPresent()) {
@@ -66,8 +68,25 @@ public class WordService {
             return existingWord.get();
         } else {
             // 否则，调用翻译服务进行翻译
-            String translation = TranslationService.translateWord(word.getWord());
+            String translation = TranslationService.translateWordDeepl(word.getWord());
+//            Map<String, Object> translation2 = TranslationService.translateWordOpenai(word.getWord());
+            //数据库中可以存json数据类型吗  ==>  可以，做到了
+
+             //将这段逻辑放到实体中试一下
+//            ObjectMapper objectMapper = new ObjectMapper();
+//            String jsonString = objectMapper.writeValueAsString(translation2);
+//            // 现在jsonString包含了Map的JSON表示形式，可以存储到数据库中
+//            word.setTranslationByLLM(jsonString);
+
+            // 使用Gson库将Map对象转换为JSON格式的字符串
+//            Gson gson = new Gson();
+//            String jsonResult = gson.toJson(translation2);
+
+
+//            word.setTranslationByLLM(jsonResult);  // 储存llm的翻译结果
             word.setTranslation(translation);
+
+
             // 保存新单词及其翻译到数据库
             return wordRepository.save(word);
         }

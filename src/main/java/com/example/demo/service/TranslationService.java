@@ -1,7 +1,10 @@
 package com.example.demo.service;
 
+import com.example.demo.controller.ChatController;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -10,16 +13,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Map;
+
 @Service
 public class TranslationService {
     private static  RestTemplate restTemplate;
-
+    @Value("${api-key}")
+    private static String apiKey;
     @Autowired
     public TranslationService(RestTemplateBuilder restTemplateBuilder) {
         this.restTemplate = restTemplateBuilder.build();
     }
 
-    public static String translateWord(String word) {
+    public static String translateWordDeepl(String word) {
         String apiUrl = "https://api.deeplx.org/translate"; // 替换为实际的API URL
         // 设置请求头
         HttpHeaders headers = new HttpHeaders();
@@ -49,6 +55,18 @@ public class TranslationService {
             // 处理错误情况，这里只是简单返回一个错误信息
             return "Error: Unable to translate the word.";
         }
+
+    }
+
+
+    public static Map<String, Object> translateWordOpenai(String word) {
+
+         // 这里调用的是chat的接口
+        ChatController chatController = new ChatController(restTemplate);
+        Map<String, Object> WordByLLM =  chatController.chat(word);
+
+            // 返回翻译后的文本
+        return WordByLLM;
 
     }
 }
