@@ -1,7 +1,6 @@
 package com.example.demo.controller;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
+
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;

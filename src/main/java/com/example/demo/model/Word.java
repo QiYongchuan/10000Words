@@ -26,9 +26,6 @@ public class Word {
      */
     private String translation;
 
-
-
-
     private String translationByLLM;    // 用于数据库存储JSON字符串  与translationMap进行互转
 
 

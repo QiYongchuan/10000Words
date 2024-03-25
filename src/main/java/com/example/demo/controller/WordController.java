@@ -2,15 +2,14 @@ package com.example.demo.controller;
 
 import com.example.demo.model.Word;
 import com.example.demo.repository.WordRepository;
+import com.example.demo.service.ImgCreateService;
 import com.example.demo.service.TranslationService;
 import com.example.demo.service.WordService;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 import java.util.List;
 
 @CrossOrigin
@@ -18,10 +17,15 @@ import java.util.List;
 @RequestMapping("/words")
 public class WordController {
 
+
+
+    @Autowired
+    private ImgCreateService imgCreateService;
     private final WordRepository wordRepository;
     private TranslationService translationService;
     @Autowired
-    public WordController(WordRepository wordRepository, TranslationService translationService) {
+    public WordController(ImgCreateService imgCreateService, WordRepository wordRepository, TranslationService translationService) {
+        this.imgCreateService = imgCreateService;
         this.wordRepository = wordRepository;
         this.translationService = translationService;
     }
@@ -42,8 +46,17 @@ public class WordController {
     @PostMapping
     public Word createWord(@RequestBody Word word)  {
 
+
         return   WordService.addWord(word);
     }
+
+    @PostMapping("/img")
+    public ResponseEntity<String> createWordWithImage(@RequestBody Word word) {
+        // 假设Word类中有一个getString方法来获取文本内容
+        String imageResult = imgCreateService.generateImageFromText(word.getWord());
+        return ResponseEntity.ok(imageResult);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteWord(@PathVariable Long id) {
         WordService.deleteWord(id);
